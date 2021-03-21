@@ -4,6 +4,7 @@
   "description": "Student College Application API",
   "main": "app.js",
   "scripts": {
+    "client-install": "npm run install --prefix frontend",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "server": "nodemon app.js",
