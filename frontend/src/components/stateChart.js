@@ -10,7 +10,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import SchoolIcon from "@material-ui/icons/School";
 import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
-import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   list: {
@@ -28,13 +27,15 @@ class ChartsByState extends Component {
   }
 
   componentDidMount = async () => {
+    console.log("mounted");
     await axios
-      .get("http://localhost:3000/api/college_byState")
+      .get("http://localhost:5000/api/college_byState")
       .then((res) => {
         this.setState({
-          labels: res.data["colleges"],
+          labels: res.data["states"],
           series: res.data["count"],
         });
+        console.log(this.state.labels);
       })
       .catch((err) => {
         console.log(err, "Error in loading data");
@@ -43,7 +44,7 @@ class ChartsByState extends Component {
 
   getCollegesByState = (data) => {
     axios
-      .get(`http://localhost:3000/api/similarCollege_byState?state=${data}`)
+      .get(`http://localhost:5000/api/similarCollege_byState?state=${data}`)
       .then((res) => {
         this.setState({
           colleges_byState: res.data,
@@ -61,7 +62,7 @@ class ChartsByState extends Component {
   collegeDetails = (id, state, courses, number_of_students) => {
     this.setState({ collegeId: id });
     axios
-      .get(`http://localhost:3000/api/college_details?id=${id}`)
+      .get(`http://localhost:5000/api/college_details?id=${id}`)
       .then((res) => {
         this.setState({
           collegesDetails: res.data,
@@ -73,7 +74,7 @@ class ChartsByState extends Component {
       });
     axios
       .get(
-        `http://localhost:3000/api/similarColleges?state=${state}&courses=${courses}&number_of_students=${number_of_students}`
+        `http://localhost:5000/api/similarColleges?state=${state}&courses=${courses}&number_of_students=${number_of_students}`
       )
       .then((res) => {
         this.setState({
@@ -84,7 +85,7 @@ class ChartsByState extends Component {
         console.log(err, "Error in loading data");
       });
     axios
-      .get(`http://localhost:3000/api/students_filterByCollegeID?college_id=${id}`)
+      .get(`http://localhost:5000/api/students_filterByCollegeID?college_id=${id}`)
       .then((res) => {
         this.setState({
           students: res.data,
@@ -97,7 +98,7 @@ class ChartsByState extends Component {
   getStudentDetails = (id) => {
     console.log(id);
     axios
-      .get(`http://localhost:3000/api/findStudent?id=${id}`)
+      .get(`http://localhost:5000/api/findStudent?id=${id}`)
       .then((res) => {
         console.log(res.data);
         this.setState({
@@ -207,9 +208,6 @@ class ChartsByState extends Component {
               </div>
             )}
           </Grid>
-          <Typography color="textSecondary" align="center">
-                in states
-            </Typography>
           <Grid item xs={12} sm={12} md={6}>
             {colleges_byState && (
               <div

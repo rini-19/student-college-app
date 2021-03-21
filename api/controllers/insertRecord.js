@@ -14,6 +14,7 @@ exports.insert_college = function (req, res) {
   });
   college_data.save((err, result) => {
     if (err) {
+      console.log(err);
       res.json({
         message: "Sorry! Cannot insert record.",
       });

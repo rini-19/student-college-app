@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Chart from "react-apexcharts";
-import Typography from '@material-ui/core/Typography';
 
 class ChartByCourse extends Component {
   constructor(props) {
@@ -11,7 +10,7 @@ class ChartByCourse extends Component {
 
   componentDidMount = async () => {
     await axios
-      .get("http://localhost:3000/api/college_byCourses")
+      .get("http://localhost:5000/api/college_byCourses")
       .then((res) => {
         this.setState({
           labels: res.data["courses"],
@@ -24,7 +23,6 @@ class ChartByCourse extends Component {
   };
 
   render() {
-    const { colleges_byState } = this.state;
     const data = {
       series: this.state.series,
       options: {
@@ -69,9 +67,9 @@ class ChartByCourse extends Component {
 
     return (
       <div>
-          <Typography color="textSecondary" align="center">
+          {/* <Typography color="textSecondary" align="center">
                 in courses
-            </Typography>
+            </Typography> */}
         {this.state.labels && this.state.series && (
           <div className="donut">
             <Chart

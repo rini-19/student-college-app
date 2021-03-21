@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const path = require('path')
 var cors = require("cors");
 
 const config = require("./config/db.config");
@@ -12,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 //DB configuration
 mongoose
@@ -22,6 +23,13 @@ mongoose
 
 //routing
 app.use('/api',api);
+
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('../frontend/build'));
+  app.get('*', (req,res)=>{
+    res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'));
+  });
+}
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
